@@ -16,10 +16,15 @@ dependencies = [
     "statsmodels (>=0.14.2,<1.0.0)",
     "scipy (>=1.11.0,<2.0.0)",
     "ipykernel (>=6.29.0,<7.0.0)",
-    "notebook (>=7.0.0,<8.0.0)"
+    "notebook (>=7.0.0,<8.0.0)",
+    "torch (>=2.3.0,<3.0.0)",
+    "prophet (>=1.1.5,<2.0.0)"
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode= false
