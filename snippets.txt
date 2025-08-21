@@ -1,0 +1,187 @@
+=== 2-3, 1. time_series_eda_bike_sharing_rich_lecture.ipynb ===
+[Snippet 1]
+# -*- coding: utf-8 -*-
+import os
+import warnings
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+
+from statsmodels.tsa.seasonal import STL
+from statsmodels.nonparametric.smoothers_lowess import lowess
+
+# 전역 경고 억제 (미래/폐기 예정 경고 및 폰트 경고 노이즈 제거)
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=r"Glyph.*missing from font.*", cate
+
+[Snippet 2]
+def load_data():
+    """
+    Bike Sharing Demand 학습용 데이터(`train.csv`)를 다음 경로에서 로드합니다.
+    - 이 강의 저장소 구조: 'bike-sharing-demand/train.csv'
+
+    반환 값:
+        pandas.DataFrame: datetime 파싱과 열 정렬을 마친 데이터프레임
+    """
+    candidates = [
+        'bike-sharing-demand/train.csv'
+    ]
+    path = None
+    for c in candidates:
+        if os.path.exists(c):
+            path = c
+            break
+    if path is None:
+        raise FileNotFoundError(
+            "train.csv 경로를 찾을 수 없습니다."
+        )
+
+    df = p
+
+[Snippet 3]
+# 시즌별로 포함된 월 확인
+df['month'] = df['datetime'].dt.month  # datetime 컬럼에서 월 정보 추출
+season_months = df.groupby('season')['month'].unique()  # 시즌별로 고유한 월 확인
+
+# 결과 출력
+for season, months in season_months.items():
+    print(f"Season {season}: Months {sorted(months)}")
+
+[Snippet 4]
+def outlier_mark(series: pd.Series, k: float = 1.5, title: str = 'IQR 기반 이상치') -> None:
+    q1, q3 = np.percentile(series.dropna(), [25, 75])
+    iqr = q3 - q1
+    lo, hi = q1 - k*iqr, q3 + k*iqr
+    mask = (series < lo) | (series > hi)
+    plt.figure(figsize=(12,3.5))
+    plt.plot(series.index, series.values, alpha=0.7)
+    plt.scatter(series.index[mask], series.values[mask], s=10)
+    plt.title(f'{title} (lo={lo:.1f}, hi={hi:.1f})')
+    plt.tight_layout()
+    plt.show()
+    print("이상치 개수:", in
+
+=== 2-3, 2-1. time_series_forecasting_classical_baselines.ipynb ===
+[Snippet 1]
+# -*- coding: utf-8 -*-
+import os
+import warnings
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+try:
+    from prophet import Prophet
+    _HAS_PROPHET = True
+except Exception:
+    _HAS_PROPHET = False
+
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+warnings.filterwarnings("ignore", category=Futu
+
+[Snippet 2]
+def load_hourly_data():
+    path = 'bike-sharing-demand/train.csv'
+    if not os.path.exists(path):
+        raise FileNotFoundError('train.csv 경로를 찾을 수 없습니다.')
+    df = pd.read_csv(path)
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df = df.sort_values('datetime').reset_index(drop=True)
+    cols = ['datetime','season','holiday','workingday','weather','temp','atemp','humidity','windspeed','casual','registered','count']
+    return df[cols]
+
+
+def add_time_features(df: pd.DataFrame) -> pd.
+
+[Snippet 3]
+residual = y_test.to_numpy() - rf_test_pred
+plt.figure(figsize=(12,3.5))
+plt.plot(test_df['datetime'].values, residual)
+plt.title('잔차 시계열 (RF)')
+plt.tight_layout(); plt.show()
+
+plt.figure(figsize=(6,4))
+plt.hist(residual, bins=30)
+plt.title('잔차 분포 (RF)')
+plt.tight_layout(); plt.show()
+
+
+[Snippet 4]
+def aggregate_daily(df: pd.DataFrame) -> pd.Series:
+    return df.set_index('datetime')['count'].resample('D').mean()
+
+
+daily = aggregate_daily(df)
+daily = daily.asfreq('D').interpolate().ffill().bfill()
+N = len(daily)
+N_tr, N_va = int(N*0.8), int(N*0.1)
+daily_tr = daily.iloc[:N_tr]
+daily_va = daily.iloc[N_tr:N_tr+N_va]
+daily_te = daily.iloc[N_tr+N_va:]
+
+sar = SARIMAX(daily_tr, order=(1,1,1), seasonal_order=(1,1,1,7), enforce_stationarity=False, enforce_invertibility=False).fit(disp=False)
+va_fc
+
+=== 2-3, 2-2. time_series_forecasting_pytorch_lstm.ipynb ===
+[Snippet 1]
+import sys, importlib
+import numpy as np, pandas as pd
+print('py:', sys.executable)
+print('numpy:', np.__version__, 'pandas:', pd.__version__)
+print('numpy.rec spec:', importlib.util.find_spec('numpy.rec'))
+print('numpy.core.records spec:', importlib.util.find_spec('numpy.core.records'))
+
+[Snippet 2]
+# -*- coding: utf-8 -*-
+import os
+import warnings
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+
+from statsmodels.tsa.seasonal import STL
+from statsmodels.nonparametric.smoothers_lowess import lowess
+
+# 전역 경고 억제 (미래/폐기 예정 경고 및 폰트 경고 노이즈 제거)
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=r"Glyph.*missing from font.*", cate
+
+[Snippet 3]
+def compute_metrics(y_true, y_pred):
+    mae = float(np.mean(np.abs(y_true - y_pred)))
+    mse = float(np.mean((y_true - y_pred)**2))
+    rmse = float(np.sqrt(mse))
+    with np.errstate(divide='ignore', invalid='ignore'):
+        mape = float(np.mean(np.abs((y_true - y_pred) / np.clip(np.abs(y_true), 1e-8, None))) * 100.0)
+    prev = np.concatenate([[y_true[0]], y_true[:-1]])
+    da = float(np.mean((np.sign(y_true - prev) == np.sign(y_pred - prev)).astype(float)))
+    return mae, mse, rmse, mape
+
+[Snippet 4]
+# -*- coding: utf-8 -*-
+import torch
+import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
+# 준비: 윈도우 데이터(X*_seq, y*_seq)와 표준화 통계(mean, std)는 기존 셀에서 생성됨
+# Xtr_seq:[N,T,F], ytr_seq:[N] (또는 [N,1]) 가정
+
+def to_tensor(x):
+    return torch.tensor(x, dtype=torch.float32)
+
+# 디바이스 선택(MPS 비활성 시 CPU)
+_device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
+
+# 텐서 변환 및 데이터로더 구성
+_Xtr = to_tensor(Xtr_seq).to(_device)
+_ytr = to_tensor(ytr_seq.squeeze(-1) if ytr_seq.nd
+
