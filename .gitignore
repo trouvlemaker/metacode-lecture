@@ -4,3 +4,6 @@ __pycache__/
 .ipynb_checkpoints/
 .vscode/
 *.pyc
+
+# data 폴더 내 모든 파일 제외
+data/*
