@@ -23,7 +23,10 @@ dependencies = [
     "timm (>=1.0.19,<2.0.0)",
     "torchinfo (>=1.8.0,<2.0.0)",
     "torchviz (>=0.0.3,<0.0.4)",
-    "graphviz (>=0.21,<0.22)"
+    "graphviz (>=0.21,<0.22)",
+    "torchaudio (==2.2.2)",
+    "openai-whisper (>=20250625,<20250626)",
+    "jiwer (>=4.0.0,<5.0.0)"
 ]
 
 
