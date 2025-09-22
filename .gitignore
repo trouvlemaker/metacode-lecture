@@ -7,3 +7,9 @@ __pycache__/
 
 # data 폴더 내 모든 파일 제외
 data/*
+
+# secrets
+keys/
+.gcp-keys/
+.env
+*.env
