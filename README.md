@@ -1,1 +1,49 @@
 # metacode
+<!-- [project]
+name = "metacode"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "matplotlib (>=3.10.5,<4.0.0)",
+    "pandas (>=2.2.2,<3.0.0)",
+    "numpy (>=1.26.4,<2.0.0)",
+    "seaborn (>=0.13.2,<1.0.0)",
+    "scikit-learn (>=1.5.0,<2.0.0)",
+    "statsmodels (>=0.14.2,<1.0.0)",
+    "scipy (>=1.11.0,<2.0.0)",
+    "ipykernel (>=6.29.0,<7.0.0)",
+    "notebook (>=7.0.0,<8.0.0)",
+    "torch (==2.8.0)",
+    "torchvision (>=0.15.0,<1.0.0)",
+    "prophet (>=1.1.5,<2.0.0)",
+    "timm (>=1.0.19,<2.0.0)",
+    "torchinfo (>=1.8.0,<2.0.0)",
+    "torchviz (>=0.0.3,<0.0.4)",
+    "graphviz (>=0.21,<0.22)",
+    "torchaudio (==2.8.0)",
+    "openai-whisper (>=20250625,<20250626)",
+    "jiwer (>=4.0.0,<5.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "soundfile (>=0.13.1,<0.14.0)",
+    "torchcodec (>=0.7.0,<0.8.0)",
+    "google-cloud-translate (>=3.21.1,<4.0.0)",
+    "datasets (>=2.19.0,<3.0.0)",
+    "sentence-transformers (>=2.7.0,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode= false
+
+[[tool.poetry.source]]
+name = "pypi"
+priority = "primary" -->
