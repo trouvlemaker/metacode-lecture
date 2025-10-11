@@ -6,7 +6,7 @@ __pycache__/
 *.pyc
 .trash
 .review.md
-.snippet.txt
+.snippets.txt
 .poetry.lock
 
 # data 폴더 특정 파일을 무시
