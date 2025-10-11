@@ -1,0 +1,29 @@
+[
+  {
+    "lang_tts": "ko-KR",
+    "text": "안녕하세요. TTS 비교를 위해 번역된 음성도 함께 들어봅니다.",
+    "file": "./data/speech/demo_mt_tts_src_ko-KR.wav",
+    "type": "source"
+  },
+  {
+    "lang_tts": "ko-KR",
+    "lang_mt": "ko",
+    "text": "안녕하세요. TTS 비교를 위해 번역된 음성도 함께 들어봅니다.",
+    "file": "./data/speech/demo_mt_tts_ko-KR.wav",
+    "type": "translated"
+  },
+  {
+    "lang_tts": "en-US",
+    "lang_mt": "en",
+    "text": "Hello. Let's also listen to the translated voice for TTS comparison.",
+    "file": "./data/speech/demo_mt_tts_en-US.wav",
+    "type": "translated"
+  },
+  {
+    "lang_tts": "ja-JP",
+    "lang_mt": "ja",
+    "text": "こんにちは。 TTS比較のために翻訳された音声も一緒に聞きます。",
+    "file": "./data/speech/demo_mt_tts_ja-JP.wav",
+    "type": "translated"
+  }
+]

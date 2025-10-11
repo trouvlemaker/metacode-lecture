@@ -4,12 +4,15 @@ __pycache__/
 .ipynb_checkpoints/
 .vscode/
 *.pyc
+.trash
+.review.md
+.snippet.txt
+.poetry.lock
 
-# data 폴더 내 모든 파일 제외
-data/*
+# data 폴더 특정 파일을 무시
+data/cifar-10-batches-py
+data/*.gz
+data/*.json
 
-# secrets
-keys/
-.gcp-keys/
+# 키값 제외
 .env
-*.env
